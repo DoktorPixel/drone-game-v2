@@ -15,6 +15,16 @@ export interface GameState {
   gameWon: boolean;
 }
 
+export interface GameStartFormProps {
+  difficulty: number;
+  setDifficulty: (value: number) => void;
+  onStart: () => void;
+}
+
+export interface GameOverPopupProps {
+  onPlayAgain: () => void;
+}
+
 export interface GameContextProps {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;

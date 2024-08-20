@@ -1,38 +1,49 @@
 import { useState } from 'react';
 import { Cave } from './components/Cave';
 import { GameOverPopup } from './components/GameOverPopup';
-import { Speedometer } from './components/Speedometer';
 import { Scoreboard } from './components/Scoreboard';
 import { useGame } from './hooks/useGame';
-import { Button, TextField } from '@mui/material';
+import GameStartForm from './components/GameStartForm';
+import { CircularProgress } from '@mui/material';
 import { useGameContext } from './context/GameContext';
 
 const App: React.FC = () => {
   const [difficulty, setDifficulty] = useState(0);
   const { startGame } = useGame();
-  const { state, dispatch } = useGameContext();
+  const { state } = useGameContext();
+  const [loading, setLoading] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'SET_PLAYER_NAME', payload: e.target.value });
+  const handleStartGame = async () => {
+    setLoading(true);
+    await startGame(state.playerName, difficulty);
+    setLoading(false);
+    setGameStarted(true);
   };
-  return (
-    <div key={state.gameOver || state.gameWon ? 'reset' : 'game'}>
-      <h1>Drone Cave Game</h1>
-      <TextField label="Name" value={state.playerName} onChange={handleNameChange} />
-      <TextField
-        label="Difficulty"
-        type="number"
-        value={difficulty}
-        onChange={(e) => setDifficulty(Number(e.target.value))}
-      />
-      <Button onClick={() => startGame(state.playerName, difficulty)}>
-        Start Game
-      </Button>
 
-      <Cave />
-      <Speedometer />
+  const handlePlayAgain = () => {
+    setGameStarted(false);
+  };
+
+  return (
+    <div>
+      {!gameStarted && (
+        <GameStartForm
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          onStart={handleStartGame}
+        />
+      )}
+
+      {loading && <CircularProgress />}
+
+      {gameStarted && !loading && !state.gameOver && !state.gameWon && <Cave />}
+
+      {(state.gameOver || state.gameWon) && (
+        <GameOverPopup onPlayAgain={handlePlayAgain} />
+      )}
+
       <Scoreboard />
-      <GameOverPopup />
     </div>
   );
 };

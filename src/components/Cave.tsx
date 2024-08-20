@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGameContext } from '../context/GameContext';
 import { Drone } from './Drone';
 import { useGame } from '../hooks/useGame';
+import { Speedometer } from './Speedometer';
 
 export const Cave: React.FC = () => {
   const { state, dispatch } = useGameContext();
@@ -45,34 +46,6 @@ export const Cave: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [dispatch, state.horizontalSpeed, state.verticalSpeed]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setDronePosition((prev) => {
-  //       const newX = prev.x + state.horizontalSpeed;
-  //       const newY = prev.y + state.verticalSpeed;
-
-  //       return { x: newX, y: newY };
-  //     });
-  //   }, 10);
-
-  //   return () => clearInterval(interval);
-  // }, [state.horizontalSpeed, state.verticalSpeed]);
-  // useEffect(() => {
-  //   const currentSegment = Math.floor(dronePosition.y / 10);
-  //   const totalSegments = state.cave.length;
-  //   if (totalSegments == 0) return;
-  //   incrementScore(dispatch, state.verticalSpeed, state.difficulty);
-  //   checkForWin(currentSegment, totalSegments, dispatch);
-  // }, [
-  //   dronePosition,
-  //   state.verticalSpeed,
-  //   state.difficulty,
-  //   state.cave.length,
-  //   incrementScore,
-  //   checkForWin,
-  //   dispatch,
-  // ]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -123,34 +96,37 @@ export const Cave: React.FC = () => {
   }, [dronePosition, state.cave, dispatch]);
 
   return (
-    <svg width="500" height="800" style={{ border: '1px solid black' }}>
-      {state.cave.map((segment, index) =>
-        isNaN(segment.left) || isNaN(segment.right) ? null : (
-          <polygon
-            key={index}
-            points={`0,${index * 10 + dronePosition.y} ${250 + segment.left},${
-              index * 10 + dronePosition.y
-            } ${250 + segment.left},${(index + 1) * 10 + dronePosition.y} 0,${
-              (index + 1) * 10 + dronePosition.y
-            }`}
-            fill="black"
-          />
-        ),
-      )}
-      <Drone x={dronePosition.x} />
-      {state.cave.map((segment, index) =>
-        isNaN(segment.left) || isNaN(segment.right) ? null : (
-          <polygon
-            key={index}
-            points={`500,${index * 10 + dronePosition.y} ${250 + segment.right},${
-              index * 10 + dronePosition.y
-            } ${250 + segment.right},${(index + 1) * 10 + dronePosition.y} 500,${
-              (index + 1) * 10 + dronePosition.y
-            }`}
-            fill="black"
-          />
-        ),
-      )}
-    </svg>
+    <>
+      <Speedometer />
+      <svg width="500" height="800" style={{ border: '1px solid black' }}>
+        {state.cave.map((segment, index) =>
+          isNaN(segment.left) || isNaN(segment.right) ? null : (
+            <polygon
+              key={index}
+              points={`0,${index * 10 + dronePosition.y} ${250 + segment.left},${
+                index * 10 + dronePosition.y
+              } ${250 + segment.left},${(index + 1) * 10 + dronePosition.y} 0,${
+                (index + 1) * 10 + dronePosition.y
+              }`}
+              fill="black"
+            />
+          ),
+        )}
+        <Drone x={dronePosition.x} />
+        {state.cave.map((segment, index) =>
+          isNaN(segment.left) || isNaN(segment.right) ? null : (
+            <polygon
+              key={index}
+              points={`500,${index * 10 + dronePosition.y} ${250 + segment.right},${
+                index * 10 + dronePosition.y
+              } ${250 + segment.right},${(index + 1) * 10 + dronePosition.y} 500,${
+                (index + 1) * 10 + dronePosition.y
+              }`}
+              fill="black"
+            />
+          ),
+        )}
+      </svg>
+    </>
   );
 };
