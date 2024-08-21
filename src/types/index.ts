@@ -14,6 +14,7 @@ export interface GameState {
   gameOver: boolean;
   gameWon: boolean;
   scoreSaved: boolean;
+  isLoading: boolean;
 }
 
 export interface GameStartFormProps {
@@ -43,7 +44,8 @@ export type GameAction =
   | { type: 'SET_VERTICAL_SPEED'; payload: number }
   | { type: 'RESET_GAME' }
   | { type: 'SAVE_SCORE' }
-  | { type: 'SET_DIFFICULTY'; payload: number };
+  | { type: 'SET_DIFFICULTY'; payload: number }
+  | { type: 'SET_LOADING'; payload: boolean };
 
 export interface Score {
   playerName: string;

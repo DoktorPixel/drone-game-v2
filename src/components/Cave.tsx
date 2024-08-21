@@ -8,7 +8,7 @@ export const Cave: React.FC = () => {
   const { state, dispatch } = useGameContext();
   const [dronePosition, setDronePosition] = useState({ x: 250, y: 0 });
   const { incrementScore, checkForWin } = useGame();
-
+  // console.log('isLoading1:', state.isLoading);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -104,6 +104,17 @@ export const Cave: React.FC = () => {
     }
   }, [dronePosition, state.cave, dispatch]);
 
+  useEffect(() => {
+    if (state.isLoading) {
+      console.log('Loading game...');
+    } else {
+      console.log('Game loaded');
+    }
+  }, [state.isLoading]);
+
+  if (state.isLoading) {
+    return <div>Loading game...</div>;
+  }
   return (
     <>
       <Speedometer />

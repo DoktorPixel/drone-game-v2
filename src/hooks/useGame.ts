@@ -11,26 +11,67 @@ export const useGame = () => {
 
   const startGame = async (name: string, difficulty: number) => {
     try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+
       const id = await initGame(name, difficulty);
       dispatch({ type: 'SET_PLAYER', payload: { id, name } });
 
       const token = await getToken(id);
 
       const webSocket = connectWebSocket(id, token, (data) => {
-        if (data)
+        if (data) {
           dispatch({ type: 'SET_CAVE', payload: { left: data[0], right: data[1] } });
+        }
       });
 
       setWs(webSocket);
-
       webSocket.onclose = () => {
         console.log('WebSocket closed');
-        // dispatch({ type: 'SET_GAME_OVER' });
       };
+
+      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (error) {
       console.error('Error during game start:', error);
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
+
+  // const startGame = async (name: string, difficulty: number) => {
+  //   try {
+  //     dispatch({ type: 'SET_LOADING', payload: true });
+
+  //     const id = await initGame(name, difficulty);
+  //     dispatch({ type: 'SET_PLAYER', payload: { id, name } });
+
+  //     const token = await getToken(id);
+
+  //     const webSocket = connectWebSocket(id, token, (data) => {
+  //       if (data) {
+  //         dispatch({ type: 'SET_CAVE', payload: { left: data[0], right: data[1] } });
+  //       }
+  //     });
+
+  //     webSocket.onopen = () => {
+  //       dispatch({ type: 'SET_LOADING', payload: false });
+  //       console.log('WebSocket connected');
+  //     };
+
+  //     webSocket.onclose = () => {
+  //       console.log('WebSocket closed');
+  //       dispatch({ type: 'SET_LOADING', payload: false });
+  //     };
+
+  //     webSocket.onerror = (error) => {
+  //       console.error('WebSocket error:', error);
+  //       dispatch({ type: 'SET_LOADING', payload: false });
+  //     };
+
+  //     setWs(webSocket);
+  //   } catch (error) {
+  //     console.error('Error during game start:', error);
+  //     dispatch({ type: 'SET_LOADING', payload: false });
+  //   }
+  // };
 
   const checkForWin = (
     currentSegment: number,

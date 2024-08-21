@@ -13,6 +13,7 @@ const initialState: GameState = {
   gameOver: false,
   gameWon: false,
   scoreSaved: false,
+  isLoading: false,
 };
 
 export const GameContext = createContext<GameContextProps>({
@@ -49,7 +50,8 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return { ...state, scoreSaved: true };
     case 'SET_DIFFICULTY':
       return { ...state, difficulty: action.payload };
-
+    case 'SET_LOADING':
+      return { ...state, isLoading: action.payload };
     case 'RESET_GAME':
       return {
         ...initialState,
