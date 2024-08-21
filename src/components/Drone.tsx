@@ -5,7 +5,7 @@ interface DroneProps {
   y?: number;
 }
 
-export const Drone: React.FC<DroneProps> = ({ x, y = 10 }) => {
+export const Drone: React.FC<DroneProps> = ({ x, y = 8 }) => {
   const { state } = useGameContext();
   const transformStyle = {
     transform: `translate(${x + state.horizontalSpeed}px, ${y}px)`,
@@ -13,7 +13,7 @@ export const Drone: React.FC<DroneProps> = ({ x, y = 10 }) => {
 
   return (
     <g style={transformStyle}>
-      <polygon points="-10,-10 10,-10 0,10" fill="green" />
+      <polygon points="-8,-8 8,-8 0,8" fill="green" />
     </g>
   );
 };

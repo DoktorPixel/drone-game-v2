@@ -19,7 +19,7 @@ export const GameContext = createContext<GameContextProps>({
   state: initialState,
   dispatch: () => null,
 });
-
+console.log('initialState', initialState);
 const gameReducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
     case 'SET_PLAYER':
@@ -47,6 +47,9 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return { ...state, verticalSpeed: action.payload };
     case 'SAVE_SCORE':
       return { ...state, scoreSaved: true };
+    case 'SET_DIFFICULTY':
+      return { ...state, difficulty: action.payload };
+
     case 'RESET_GAME':
       return {
         ...initialState,

@@ -17,8 +17,8 @@ export interface GameState {
 }
 
 export interface GameStartFormProps {
-  difficulty: number;
-  setDifficulty: (value: number) => void;
+  // difficulty: number;
+  // setDifficulty: (value: number) => void;
   onStart: () => void;
   loading: boolean;
 }
@@ -42,7 +42,8 @@ export type GameAction =
   | { type: 'SET_HORIZONTAL_SPEED'; payload: number }
   | { type: 'SET_VERTICAL_SPEED'; payload: number }
   | { type: 'RESET_GAME' }
-  | { type: 'SAVE_SCORE' };
+  | { type: 'SAVE_SCORE' }
+  | { type: 'SET_DIFFICULTY'; payload: number };
 
 export interface Score {
   playerName: string;

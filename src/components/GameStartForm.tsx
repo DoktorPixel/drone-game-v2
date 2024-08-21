@@ -3,17 +3,16 @@ import { Button, Slider, TextField, Typography } from '@mui/material';
 import { useGameContext } from '../context/GameContext';
 import { GameStartFormProps } from '../types';
 
-const GameStartForm: React.FC<GameStartFormProps> = ({
-  difficulty,
-  setDifficulty,
-  onStart,
-  loading,
-}) => {
+const GameStartForm: React.FC<GameStartFormProps> = ({ onStart, loading }) => {
   const { state, dispatch } = useGameContext();
   const [attemptedToStart, setAttemptedToStart] = useState(false);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET_PLAYER_NAME', payload: e.target.value });
+  };
+
+  const handleDifficultyChange = (difficulty: number) => {
+    dispatch({ type: 'SET_DIFFICULTY', payload: difficulty });
   };
 
   const isNameEmpty = !state.playerName || state.playerName.trim() === '';
@@ -38,8 +37,8 @@ const GameStartForm: React.FC<GameStartFormProps> = ({
         helperText={attemptedToStart && isNameEmpty ? 'Name is required' : ''}
       />
       <Slider
-        value={difficulty}
-        onChange={(_, val) => setDifficulty(val as number)}
+        value={state.difficulty}
+        onChange={(_, val) => handleDifficultyChange(val as number)}
         min={0}
         max={10}
         step={1}

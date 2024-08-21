@@ -16,7 +16,11 @@ export const GameOverPopup: React.FC<GameOverPopupProps> = ({ onPlayAgain }) => 
     onPlayAgain();
   };
   return (
-    <Dialog open={state.gameOver || state.gameWon} onClose={handleClose}>
+    <Dialog
+      open={state.gameOver || state.gameWon}
+      onClose={handleClose}
+      className="game-over-popup"
+    >
       <DialogTitle>{state.gameWon ? 'Congratulations!' : 'Game Over'}</DialogTitle>
       <DialogContent>
         {state.gameWon ? 'You won the game!' : 'The drone has been destroyed.'}

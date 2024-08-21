@@ -8,7 +8,6 @@ import { CircularProgress } from '@mui/material';
 import { useGameContext } from './context/GameContext';
 
 const App: React.FC = () => {
-  const [difficulty, setDifficulty] = useState(0);
   const { startGame } = useGame();
   const { state } = useGameContext();
   const [loading, setLoading] = useState(false);
@@ -16,7 +15,7 @@ const App: React.FC = () => {
 
   const handleStartGame = async () => {
     setLoading(true);
-    await startGame(state.playerName, difficulty);
+    await startGame(state.playerName, state.difficulty);
     setLoading(false);
     setGameStarted(true);
   };
@@ -28,12 +27,10 @@ const App: React.FC = () => {
   return (
     <main>
       {!gameStarted && (
-        <GameStartForm
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-          onStart={handleStartGame}
-          loading={loading}
-        />
+        <>
+          <GameStartForm onStart={handleStartGame} loading={loading} />{' '}
+          <Scoreboard />
+        </>
       )}
 
       {loading && <CircularProgress />}
@@ -43,8 +40,6 @@ const App: React.FC = () => {
       {(state.gameOver || state.gameWon) && (
         <GameOverPopup onPlayAgain={handlePlayAgain} />
       )}
-
-      <Scoreboard />
     </main>
   );
 };

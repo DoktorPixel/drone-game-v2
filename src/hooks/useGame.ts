@@ -70,7 +70,11 @@ export const useGame = () => {
   const scoreMultiplier = 1; // it is possible to change this
 
   const calculateScoreIncrement = (verticalSpeed: number, complexity: number) => {
-    return scoreMultiplier * (Math.abs(verticalSpeed * 2) + complexity * 2);
+    if (verticalSpeed === 0) {
+      return 0;
+    }
+
+    return scoreMultiplier * (Math.abs(verticalSpeed * 2) + complexity);
   };
 
   const incrementScore = (
@@ -79,7 +83,9 @@ export const useGame = () => {
     complexity: number,
   ) => {
     const scoreIncrement = calculateScoreIncrement(verticalSpeed, complexity);
-    dispatch({ type: 'INCREMENT_SCORE', payload: scoreIncrement });
+    if (scoreIncrement > 0) {
+      dispatch({ type: 'INCREMENT_SCORE', payload: scoreIncrement });
+    }
   };
 
   useEffect(() => {
