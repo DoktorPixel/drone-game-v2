@@ -12,6 +12,7 @@ const initialState: GameState = {
   cave: [],
   gameOver: false,
   gameWon: false,
+  scoreSaved: false,
 };
 
 export const GameContext = createContext<GameContextProps>({
@@ -44,6 +45,8 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return { ...state, horizontalSpeed: action.payload };
     case 'SET_VERTICAL_SPEED':
       return { ...state, verticalSpeed: action.payload };
+    case 'SAVE_SCORE':
+      return { ...state, scoreSaved: true };
     case 'RESET_GAME':
       return {
         ...initialState,

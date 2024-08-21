@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../context/GameContext';
 
 export const Speedometer: React.FC = () => {

@@ -13,12 +13,14 @@ export interface GameState {
   cave: CaveSegment[];
   gameOver: boolean;
   gameWon: boolean;
+  scoreSaved: boolean;
 }
 
 export interface GameStartFormProps {
   difficulty: number;
   setDifficulty: (value: number) => void;
   onStart: () => void;
+  loading: boolean;
 }
 
 export interface GameOverPopupProps {
@@ -39,4 +41,11 @@ export type GameAction =
   | { type: 'SET_GAME_WON' }
   | { type: 'SET_HORIZONTAL_SPEED'; payload: number }
   | { type: 'SET_VERTICAL_SPEED'; payload: number }
-  | { type: 'RESET_GAME' };
+  | { type: 'RESET_GAME' }
+  | { type: 'SAVE_SCORE' };
+
+export interface Score {
+  playerName: string;
+  difficulty: number;
+  score: number;
+}

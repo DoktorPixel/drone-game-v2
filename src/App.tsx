@@ -26,12 +26,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <main>
       {!gameStarted && (
         <GameStartForm
           difficulty={difficulty}
           setDifficulty={setDifficulty}
           onStart={handleStartGame}
+          loading={loading}
         />
       )}
 
@@ -44,7 +45,7 @@ const App: React.FC = () => {
       )}
 
       <Scoreboard />
-    </div>
+    </main>
   );
 };
 

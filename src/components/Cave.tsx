@@ -61,7 +61,14 @@ export const Cave: React.FC = () => {
 
         incrementScore(dispatch, state.verticalSpeed, state.difficulty);
 
-        checkForWin(currentSegment, totalSegments, dispatch);
+        checkForWin(
+          currentSegment,
+          totalSegments,
+          dispatch,
+          state.playerName,
+          state.difficulty,
+          state.score,
+        );
 
         return { x: newX, y: newY };
       });
@@ -76,6 +83,8 @@ export const Cave: React.FC = () => {
     state.difficulty,
     checkForWin,
     incrementScore,
+    state.playerName,
+    state.score,
   ]);
 
   useEffect(() => {

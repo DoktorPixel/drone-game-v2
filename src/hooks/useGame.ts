@@ -3,6 +3,7 @@ import { initGame, getToken } from '../services/api';
 import { connectWebSocket } from '../services/websocket';
 import { useGameContext } from '../context/GameContext';
 import { GameAction } from '../types';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useGame = () => {
   const { dispatch } = useGameContext();
@@ -35,18 +36,41 @@ export const useGame = () => {
     currentSegment: number,
     totalSegments: number,
     dispatch: React.Dispatch<GameAction>,
+    playerName: string,
+    difficulty: number,
+    score: number,
   ) => {
     if (totalSegments === 0) return;
 
     if (currentSegment >= totalSegments - 1) {
       dispatch({ type: 'SET_GAME_WON' });
+      const scores = JSON.parse(localStorage.getItem('scores') || '[]');
+      const isDuplicate = scores.some(
+        (entry: { playerName: string; score: number }) =>
+          entry.playerName === playerName && entry.score === score,
+      );
+
+      if (!isDuplicate) {
+        const newScore = {
+          id: uuidv4(),
+          playerName,
+          difficulty,
+          score,
+        };
+        const updatedScores = [...scores, newScore].sort(
+          (a, b) => b.score - a.score,
+        );
+        localStorage.setItem('scores', JSON.stringify(updatedScores));
+      }
+
+      dispatch({ type: 'SAVE_SCORE' });
     }
   };
 
   const scoreMultiplier = 1; // it is possible to change this
 
   const calculateScoreIncrement = (verticalSpeed: number, complexity: number) => {
-    return scoreMultiplier * (Math.abs(verticalSpeed) + complexity);
+    return scoreMultiplier * (Math.abs(verticalSpeed * 2) + complexity * 2);
   };
 
   const incrementScore = (
