@@ -3,6 +3,7 @@ import { useGameContext } from '../context/GameContext';
 import { Drone } from './Drone';
 import { useGame } from '../hooks/useGame';
 import { Speedometer } from './Speedometer';
+import { CircularProgress } from '@mui/material';
 
 export const Cave: React.FC = () => {
   const { state, dispatch } = useGameContext();
@@ -102,17 +103,21 @@ export const Cave: React.FC = () => {
     }
   }, [dronePosition, state.cave, dispatch]);
 
-  // useEffect(() => {
-  //   if (state.isLoading) {
-  //     console.log('Loading game...');
-  //   } else {
-  //     console.log('Game loaded');
-  //   }
-  // }, [state.isLoading]);
+  useEffect(() => {
+    if (state.isLoading) {
+      console.log('Loading game...');
+    } else {
+      console.log('Game loaded');
+    }
+  }, [state.isLoading]);
 
-  // if (state.isLoading) {
-  //   return <div>Loading game...</div>;
-  // }
+  if (state.isLoading) {
+    return (
+      <div className="loading-game">
+        <CircularProgress /> Please wait while the data loads
+      </div>
+    );
+  }
   return (
     <div className="cave">
       <Speedometer />

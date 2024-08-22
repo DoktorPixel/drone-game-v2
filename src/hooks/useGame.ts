@@ -27,9 +27,8 @@ export const useGame = () => {
       setWs(webSocket);
       webSocket.onclose = () => {
         console.log('WebSocket closed');
+        dispatch({ type: 'SET_LOADING', payload: false });
       };
-
-      dispatch({ type: 'SET_LOADING', payload: false });
     } catch (error) {
       console.error('Error during game start:', error);
       dispatch({ type: 'SET_LOADING', payload: false });
