@@ -35,3 +35,40 @@ ul,
 menu {
   list-style: none;
 }
+
+.cave {
+  display: flex;
+  flex-direction: column;
+}
+
+.speedometers {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.speedometer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+}
+.speedometers h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.score-container {
+  margin-top: 34px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.speed-value {
+  display: flex;
+  gap: 5px;
+  margin-top: 0px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}

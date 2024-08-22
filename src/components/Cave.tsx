@@ -114,9 +114,9 @@ export const Cave: React.FC = () => {
   //   return <div>Loading game...</div>;
   // }
   return (
-    <>
+    <div className="cave">
       <Speedometer />
-      <svg width="500" height="800" style={{ border: '1px solid black' }}>
+      <svg width="500" height="600" style={{ border: '1px solid black' }}>
         {state.cave.map((segment, index) =>
           isNaN(segment.left) || isNaN(segment.right) ? null : (
             <polygon
@@ -145,6 +145,6 @@ export const Cave: React.FC = () => {
           ),
         )}
       </svg>
-    </>
+    </div>
   );
 };
