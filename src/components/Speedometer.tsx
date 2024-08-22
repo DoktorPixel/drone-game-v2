@@ -34,9 +34,11 @@ export const Speedometer: React.FC = () => {
   const { state } = useGameContext();
 
   const verticalSpeed = Math.abs(state.verticalSpeed);
-  const horizontalSpeed = -state.horizontalSpeed;
+  const horizontalSpeed = state.horizontalSpeed;
   const horizontalDirection =
     horizontalSpeed > 0 ? 'Right' : horizontalSpeed < 0 ? 'Left' : '';
+
+  const invertedHorizontalSpeed = -horizontalSpeed;
   return (
     <div className="speedometers">
       <div className="speedometer">
@@ -62,14 +64,14 @@ export const Speedometer: React.FC = () => {
           height={100}
           startAngle={-180}
           endAngle={180}
-          value={horizontalSpeed * 5}
+          value={invertedHorizontalSpeed * 5}
         >
           <GaugeReferenceArc />
           <GaugeValueArc />
           <GaugePointer />
         </GaugeContainer>
         <p className="speed-value">
-          {horizontalDirection && <span>{horizontalDirection.toLowerCase()} </span>}
+          {horizontalDirection && <span>{horizontalDirection} </span>}
           {Math.abs(horizontalSpeed)} m/s
         </p>
       </div>
