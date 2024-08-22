@@ -55,8 +55,6 @@ export const Cave: React.FC = () => {
 
         const currentSegment = Math.floor(Math.abs(newY) / 10);
         const totalSegments = state.cave.length;
-        // console.log('currentSegment', currentSegment);
-        // console.log('totalSegments', totalSegments);
         if (totalSegments === 0) return prev;
 
         incrementScore(dispatch, state.verticalSpeed, state.difficulty);
@@ -104,17 +102,17 @@ export const Cave: React.FC = () => {
     }
   }, [dronePosition, state.cave, dispatch]);
 
-  useEffect(() => {
-    if (state.isLoading) {
-      console.log('Loading game...');
-    } else {
-      console.log('Game loaded');
-    }
-  }, [state.isLoading]);
+  // useEffect(() => {
+  //   if (state.isLoading) {
+  //     console.log('Loading game...');
+  //   } else {
+  //     console.log('Game loaded');
+  //   }
+  // }, [state.isLoading]);
 
-  if (state.isLoading) {
-    return <div>Loading game...</div>;
-  }
+  // if (state.isLoading) {
+  //   return <div>Loading game...</div>;
+  // }
   return (
     <>
       <Speedometer />

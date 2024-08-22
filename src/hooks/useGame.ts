@@ -83,7 +83,7 @@ export const useGame = () => {
   ) => {
     if (totalSegments === 0) return;
 
-    if (currentSegment >= totalSegments - 1) {
+    if (currentSegment >= totalSegments - 1 && score > totalSegments) {
       dispatch({ type: 'SET_GAME_WON' });
       const scores = JSON.parse(localStorage.getItem('scores') || '[]');
       const isDuplicate = scores.some(

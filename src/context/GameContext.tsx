@@ -20,8 +20,12 @@ export const GameContext = createContext<GameContextProps>({
   state: initialState,
   dispatch: () => null,
 });
-console.log('initialState', initialState);
+// console.log('initialState', initialState);
+
 const gameReducer = (state: GameState, action: GameAction): GameState => {
+  // if (action.type === 'SET_LOADING') {
+  //   console.log('state , action ', [state, action]);
+  // }
   switch (action.type) {
     case 'SET_PLAYER':
       return {
